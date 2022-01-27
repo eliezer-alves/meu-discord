@@ -131,51 +131,87 @@ function MessageList(props) {
         >
             {props.chat.map((message) => {
                 return (
-                    <Text
-                        key={message.id}
-                        tag="li"
-                        styleSheet={{
-                            borderRadius: '5px',
-                            padding: '6px',
-                            marginBottom: '12px',
-                            hover: {
-                                backgroundColor: appConfig.theme.colors.neutrals[700],
-                            }
-                        }}
-                    >
-                        <Box
-                            styleSheet={{
-                                marginBottom: '8px',
-                            }}
-                        >
-                            <Image
-                                styleSheet={{
-                                    width: '20px',
-                                    height: '20px',
-                                    borderRadius: '50%',
-                                    display: 'inline-block',
-                                    marginRight: '8px',
-                                }}
-                                src={`https://github.com/`+message.from+`.png`}
-                            />
-                            <Text tag="strong">
-                                {message.from}
-                            </Text>
-                            <Text
-                                styleSheet={{
-                                    fontSize: '10px',
-                                    marginLeft: '8px',
-                                    color: appConfig.theme.colors.neutrals[300],
-                                }}
-                                tag="span"
-                            >
-                                {(new Date().toLocaleDateString())}
-                            </Text>
-                        </Box>
-                        {message.text}
-                    </Text>
+                    <>
+                        <Message message={message}/>
+                    </>
                 );
             })}
         </Box>
     )
+}
+
+function Message(props) {
+    const message = props.message
+    console.log(props);
+    return (
+        <Text
+            key={message.id}
+            tag="li"
+            styleSheet={{
+                minHeight: '52px',
+                borderRadius: '5px',
+                padding: '6px',
+                marginBottom: '12px',
+                hover: {
+                    backgroundColor: appConfig.theme.colors.neutrals[700],
+                },
+                display: 'flex',
+            }}
+        >
+            <Box
+                styleSheet={{                    
+                    width: '42px',
+                    height: '42px',
+                    marginRight: '15px',
+                }}
+            >
+                <Image
+                    styleSheet={{
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '50%',
+                        display: 'inline-block',
+                        marginRight: '8px',
+                    }}
+                    src={`https://github.com/`+message.from+`.png`}
+                />
+            </Box>
+            <Box
+                styleSheet={{
+                    // height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                }}
+            >
+                <div>
+                    <Text tag="strong">
+                        {message.from}
+                    </Text>
+                    <Text
+                        styleSheet={{
+                            fontSize: '10px',
+                            marginLeft: '8px',
+                            color: appConfig.theme.colors.neutrals[300],
+                        }}
+                        tag="span"
+                    >
+                        {(new Date().toLocaleDateString())}
+                    </Text>
+                </div>
+                <div>
+                    <Text
+                        styleSheet={{
+                            fontSize: '14px',
+                            fontFamily: 'Roboto Mono',
+                        }}
+                        tag="span"
+                    >
+                        
+                        {message.text}
+                    </Text>
+                </div>
+            </Box>
+        </Text>
+    );
 }
