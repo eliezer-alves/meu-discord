@@ -72,7 +72,7 @@ export default function ChatPage() {
                             onChange={(e) => {
                                 setMessage(e.target.value)
                             }}
-                            onKeyPress={(e) => {                                
+                            onKeyPress={(e) => {
                                 if (e.key === 'Enter'){
                                     e.preventDefault()
                                     handleNewMessage(message)
@@ -83,9 +83,9 @@ export default function ChatPage() {
                             styleSheet={{
                                 width: '100%',
                                 border: '0',
-                                resize: 'none',
+                                resize: 'none',                                
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                padding: '10px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
