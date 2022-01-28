@@ -1,22 +1,48 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
+import { createClient } from '@supabase/supabase-js'
+
+
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMzMjgzNCwiZXhwIjoxOTU4OTA4ODM0fQ.17Yzc42M3zdNjeWkbZ_y10N05tlppByFacnu1qt7sBA'
+const SUPABASE_URL = 'https://lbkremvghvnlpzgilvai.supabase.co'
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
 
 export default function ChatPage() {
     const [message, setMessage] = React.useState('');
     const [chat, setChat] = React.useState([]);
     const username = 'eliezer-alves'
+
+    React.useEffect(() => {
+        supabaseClient
+            .from('messages')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .then(({data}) => {
+                console.log('Dados da consulta', data);
+                setChat(data)
+            });
+    }, []);
     
     function handleNewMessage(textMessage) {
         const message = {
-            id: chat.length + 1,
+            // id: chat.length + 1,
             from: username,
             text: textMessage
         }
-        setChat([
-            message,
-            ...chat,
-        ])
+
+        supabaseClient
+            .from('messages')
+            .upsert([
+                message
+            ]).then(({ data }) => {
+                console.log(`criando mensagem ${data}`);
+                setChat([
+                    message,
+                    ...chat,
+                ]);
+            });
         setMessage('')
     }
 
@@ -119,6 +145,7 @@ function Header() {
 }
 
 function MessageList(props) {
+    console.log(props);
     return (
         <Box
             tag="ul"
@@ -142,9 +169,7 @@ function MessageList(props) {
     )
 }
 
-function Message(props) {
-    const message = props.message
-    console.log(props);
+function Message({message}) {
     return (
         <Text
             key={message.id}
@@ -175,7 +200,7 @@ function Message(props) {
                         display: 'inline-block',
                         marginRight: '8px',
                     }}
-                    src={`https://github.com/`+message.from+`.png`}
+                    src={`https://github.com/${message.from}.png`}
                 />
             </Box>
             <Box
