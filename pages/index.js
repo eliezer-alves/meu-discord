@@ -64,7 +64,8 @@ export default function PaginaInicial() {
                 {appConfig.name}
               </Text>
   
-              <TextField
+              <TextField			  
+				placeholder="Git Hub username"
                 value={username}
                 onChange={(event) => {
                   setUsername(event.target.value);

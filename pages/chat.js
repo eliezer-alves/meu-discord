@@ -83,11 +83,13 @@ export default function ChatPage() {
                             styleSheet={{
                                 width: '100%',
                                 border: '0',
-                                resize: 'none',                                
+                                resize: 'none',
                                 borderRadius: '5px',
                                 padding: '10px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
+                                fontSize: '16px',
+                                fontFamily: 'Roboto Mono',
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
